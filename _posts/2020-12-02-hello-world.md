@@ -1,6 +1,7 @@
 ---
 title: "Hello, world!"
 #excerpt_separator: "<!--more-->"
+date: 2020-12-02T15:34:30-08:00
 categories:
   - Blog
 tags:
