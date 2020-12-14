@@ -30,3 +30,154 @@ If there's really one take-away from this book, it's that "clarity is key". Ther
 
 > "The name of a variable, function, or class should answer all the big questions. It should tell you why it exists, what it does, and how it is used. If a name requires a comment, then the name does not reveal its intent."
 
+Let's go over an example from the book. When you're reading this, think about what it's doing, but also how many times you had to read it to understand what's happening:
+
+```csharp
+public List<int[]> getItem() 
+{
+  List<int[]> list1 = new List<int[]>();
+  for (var x in theList)
+  {
+    if (x[0] == 4)
+      list1.Add(x);
+  }
+  return list1;
+}
+```
+
+Spacing is fine, there's no complex logic, indentation is easy to read.. so why is it so hard to tell what the code is doing here? 
+
+"Okay, so the function is returning a list of int arrays...? What's "theList"? X in theList? What is that? First element in X? Equivalent to 4?? What is 4!?"
+
+Martin says "the problem isn't the simplicity of the code but the <i>implicity</i> of the code." The code implicitly requires we know:
+1. What kinds of things are in ``theList``?
+2. What is the significance of the zeroth subscript of an item in ``theList``?
+3. What is the significance of the value 4?
+4. How would I use the list being returned?
+
+Let's rewrite this to be more clear. Let's say we're working on a mine sweeper game, and we find that ``theList`` is actually a gmaeboard. Each cell on the board is represented by an array, and the first element in the array is the status value of the cell, with 4 being 'flagged'.
+
+```csharp
+public List<int[]> getFlaggedCells()
+{
+  List<int[]> flaggedCells = new List<int[]>();
+  for (var cell in gameboard)
+  {
+    if (cell[STATUS_VALUE] == FLAGGED)
+      flaggedCells.Add(cell);
+  }
+  return flaggedCels;
+}
+```
+
+Better, but let's go one step further and make a simple class ``Cell`` out of the int arrays:
+
+```csharp
+public List<Cell> getFlaggedCells() {
+  List<Cell> flaggedCells = new List<Cell>();
+  for(var cell in gameboard)
+  {
+    if(cell.isFlagged())
+      flaggedCells.Add(cell);
+  }
+  return flaggedCells;
+}
+```
+
+This takes SIGNIFICANTLY less brainpower, and you can understand it in 1 read through. Easy. Amazing what clarity can do to the code.
+
+## Functions
+Martin says that functions should be small.. really small.. "hardly ever longer than 20 lines", and that they should do "one thing, they should do it well, and they should do it only." Single Responsibility Principle, right? It's amazing how often I find this violated.
+
+### Method Bodies
+I was recently making a change in one of our code bases for a label's value based on some conditions. Trying to walk through the controller intialization, I found the logic barried in the ``.then(...)`` of a Promise, and it was really hard to read. Trying to use the Boyscouts rule that was used in the book and "leave the campground cleaner than [I] found it"... I decided to break that out into another function that ONLY set the label. So instead of 
+
+```ts
+this.method().then( (result) =>
+{
+  // like 19 lines of logic
+  //
+  //
+  //
+  // ...
+  //
+  //
+  //
+})
+```
+it became:
+```ts
+this.method().then(this.setLabel);
+//...
+private setLabel(result: MethodResult) {
+  // 19 lines of logic here.
+}
+```
+
+Simple. One responsibility, easy to read. It felt so much more organized, and the constructor was much easier to read. Was definitely one of those "hey I applied the thing I learned" moments.
+
+In the intro to the book, [Ward Cunningham](https://en.wikipedia.org/wiki/Ward_Cunningham) has the quote:
+> You know you are working on clean code when each routine turns out to be pretty much what you expected.
+The refactor of creating a function called ``setLabel`` where it.. sets the label, <i>and only sets the label</i>, felt like I was making what Ward would call clean code.
+
+### Arguments
+This is another section where Martin's passion (or previous frustration) can be felt. He says that 1 is great, 2 is okay, and 3 "should be avoided where possible. More than 3 requires very special justification - <u><i>and then should be used anyway</i></u>".
+
+His example for this is the difference between these two:
+
+```csharp
+Circle makeCircle(double x, double y, double radius);
+Circle makeCircle(Point center, double radius);
+```
+
+> Reducing the number of arguments by creating objects out of them may seem like cheating, but it's not. When groups of variables are passed together, the way x and y are in the example above, they are likely part of a concept <b>that deserves a name of its own</b>.
+
+The other 2 great pieces of advice from Martin that I think are worth bringing up:
+1. Don't use booleans as inputs. "It immediately complicates the signature of the method, loudly proclaiming that this function does more than one thing. It does one thing when the flag is true and another if the flag is false!"
+2. Command Query separation - "Either your function should change the state of an object, or it should return some information about that object."
+
+## Comments
+Comments, according to Martin, are
+> "[...] at best, a necessary evil. If our programming languages were expressive enough, or we had the talent to subtly wield those languages to express our intent, we would not need comments very much - perhaps at all."
+
+My reaction when I read this was basically...
+![Can't reall argue with that](/assets/images/nothing-to-say.jpg)
+
+I've been sort of wrestling with this for a while. One of the Principle engineers on my team, when I started, casually said "code is the only source of truth. Comments lie, code doesn't" and it's really stuck with me for a while. If I have to write comments to explain my code, I might need to rewrite my code.
+
+In this section, Martin places comments into one of two buckets, Good Comments and Bad Comments.
+
+### Good Comments
+- Legal comments
+- Informative comments
+- Explination of intent
+- Clarification
+- Warning of consequences
+- TODO comments
+- Amplification
+
+### Bad Comments
+- Mumbling
+- Redundant
+- Misleading
+- Redundant
+- Mandated comments
+- Journal comments
+- Noise comments
+- Scary noise
+- Position markers
+- Closing braces
+- Attributions and bylines
+- Commented out code
+- HTML comments (HTML in source, not a comment on HTML)
+- Nonlocal information
+- Too much information
+- Inobvious connection
+- Function headers
+
+## Classes
+With classes, there were few lessons to learn, most mainly focused around the Single Responsibility Principle.
+> "With functions we count lines. With classes, we count responsibilities."
+
+SRP is pervasive throughout the book. The best analogy I've seen for this came from Martin himself:
+>"Do you want your tools organized into toolboxes with many small drawers each containing well-defined and well-labeled components? Or do you want a few drawers that you just toss everything into?"

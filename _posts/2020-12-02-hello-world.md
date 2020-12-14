@@ -23,7 +23,7 @@ I finally decided to use [Jekyll](https://jekyllrb.com/), which got me running i
 Then, the REAL fun began...
 
 ## Cool, it works... now what?
-![image tooltip here](/assets/images/plankton-get-this-far.jpg)
+![I didn't think I'd get this far](/assets/images/plankton-get-this-far.jpg)
 
 Anxiety came back faster than expected. "Okay, now I have to be creative.. what will people care about? What would people read? What are topics I can write about that people might appreciate?
 
