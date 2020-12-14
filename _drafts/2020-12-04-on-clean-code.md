@@ -181,3 +181,69 @@ With classes, there were few lessons to learn, most mainly focused around the Si
 
 SRP is pervasive throughout the book. The best analogy I've seen for this came from Martin himself:
 >"Do you want your tools organized into toolboxes with many small drawers each containing well-defined and well-labeled components? Or do you want a few drawers that you just toss everything into?"
+
+Martin also talks about cohesion and coupling (which, [here's a good StackOverflow](https://stackoverflow.com/questions/14000762/what-does-low-in-coupling-and-high-in-cohesion-mean) about what it means to have high cohesion and low coupling). Cohesion is described as "the more variables a method manipulates, the more cohesive that method is to its class".  So according to Martin, "a class in which each variable is used by each method is maximally cohesive." When I was reading this section, I thought that was a super interesting point: to be maximally cohesive each function uses each variable. Finally, on coupling, Martin says:
+>"Lack of coupling means that the elements of our system are better isolated from each other and from change."
+
+Low coupling and keeping elements isolated from change will help reduce the chance of regressions.
+
+## Unit Tests
+Code needs to be clean, but Martin makes great points about why unit tests should also be clean.
+>"The problem is that tests must change as the production code evolves. The dirtier the tests, the harder they are to change. The more tangled the test code, the more likely it is that you will spend more time cramming new tests into the suit than it takes to write the new production code."
+
+Refactoring code is one struggle, but when you have to also refactor the unit tests surrounding the code, the difficulty of a change might be a multiplier if both aren't kept clean. In this section, he has one of my favorite quotes in the book:
+>"What makes a clean test? 3 things: readability, readability, and readability"
+
+Just like everything else we've talked about so far, if it's hard to read, it's hard to understand. If it's hard to understand, it's going to take much longer to complete the task than if someone had taken the time to write clear, concise tests that anyone can immediately understand. Velocity depends on understanding what's written. Martin also mentions that clean tests follow FIRST:
+- Fast - when a test runs slow, you won't want to run tests frequently.
+- Independent - tests should not depend on each other. If one fails, then it kicks off a cascading chain of failures and the root cause is hard to diagnose.
+- Repeatable - tests should be able to run in any environment: prod, QA, local, even without a network. If your tests aren't repeatable, you'll have an excuse for why they fail (see: flaky tests).
+- Self-validating - tests should have a boolean output; either they pass or they fail. If the tests aren't self-validating, then failure can become subjective and running the tests can require a long manual evaluation.
+- Timely - written in a timely fashion. If you write tests after the production code, you may find the production code hard to test.
+
+Closing off this chapter, Martin talks about how test rot == code rot:
+> "If you let tests rot, your code will rot too. Keep your tests clean."
+
+## Smells
+This final section is dedicated to "code smells". This is another industry term I've recently heard, and I'm definitely going to be using it from here on out.
+
+Code smell, for those who don't know, was popularized by Martin Fowler in <i>Refactoring: Improving the Design of Existing Code</i>, saying "it is a surface indication that usually corresponds to a deeper problem in the software system".
+
+Sure, the code looks fine... but how does it <i>smell?????</i>
+
+Let's look over some smells:
+
+Comments
+- Inappropriate information
+- Obsolete comment
+- Redundant comment
+- Poorly written comment
+- Redundant comment
+- Commented out code
+
+Environment
+- Build requires more than 1 step
+- Tests require more than 1 step
+
+Functions
+- Too many arguments
+- Argument outputs
+- Flag arguments
+- Dead functions
+
+General
+- Multiple languages in one source file
+- Obvious behavior is unimplemented
+- Incorrect behavior at boundaries
+- Overridden safeties
+- Duplication
+- Duplication
+- Code at wrong level of abstraction
+- Base classes depend on their derivatives
+- Too much information
+
+## Conclusion
+This, to me is definitely a book programmers will want to read. Does it have a lot of in depth, thought provoking chapters that will make you put the book down and think for an hour? Not really. Does it have concepts that everyone should follow? Most likely. For most of us, it's not just my code or your code, it's <i>our</i> code, and we're all responsible for how it looks, how it runs, and how easy we make it to maintain for people in the future. Next time someone makes a pull request, or you're about to create one, double check on code cleanliness to leave the campgrounds cleaner than you found it.
+
+## References
+- Clean Code by Robert C. Martin - https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882
