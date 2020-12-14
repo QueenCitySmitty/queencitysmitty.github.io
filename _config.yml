@@ -72,6 +72,9 @@ author:
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/https://github.com/QueenCitySmitty"
+    - label: "LinkedIn"
+      icon: "fab fa-linkedin-in"
+      url: "https://www.linkedin.com/in/%E2%98%95-matt-smith-60344148/"
 
 footer:
   links:
@@ -81,6 +84,9 @@ footer:
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/https://github.com/QueenCitySmitty"
+    - label: "LinkedIn"
+      icon: "fab fa-linkedin-in"
+      url: "https://www.linkedin.com/in/%E2%98%95-matt-smith-60344148/"
 
 defaults:
   # _posts
