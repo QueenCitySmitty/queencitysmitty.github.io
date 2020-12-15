@@ -156,32 +156,64 @@ I've been sort of wrestling with this for a while. One of the Principle engineer
 In this section, Martin places comments into one of two buckets, Good Comments and Bad Comments.
 
 ### Good Comments
-- Legal comments
-- Informative comments
-- Explination of intent
-- Clarification
-- Warning of consequences
-- TODO comments
-- Amplification
+- <b><u>Legal comments</u></b>: sometimes, corporate coding standards force us to write certain comments for legal reasons, like copyright.
+- <b><u>Informative comments</u></b>: a good example of this is regex. I personally have trouble reading regex and knowing exactly what it's looking for, so a good comment would be explaining the pattern:
+
+```
+// format matched kk::mm::ss EEE, MMM dd, YYYY
+```
+- <b><u>Explination of intent</u></b>: a comment providing intent can be helpful. Code can't always provide business justification, but a comment might be helpful.
+- <b><u>Clarification</u></b>: if you're using a library, parts of the library might be confusing, which gives us a good opportunity for clarification comments.
+- <b><u>Warning of consequences</u></b>: we've all seen these memes:
+
+![Total hours wasted: 254](/assets/images/waste-time-meme.jpg)
+
+Don't be a hero, heed the warning.
+- <b><u>TODO comments</u></b>: I like to keep my PRs relatively small, and if I know there's a work item that will follow, I'll write a comment and tag our Azure Dev Ops work item number so other members can look it up.
+- <b><u>Amplification</u></b>: if a section is critical, it's a good idea to amplify.
 
 ### Bad Comments
-- Mumbling
-- Redundant
-- Misleading
-- Redundant
-- Mandated comments
-- Journal comments
-- Noise comments
-- Scary noise
-- Position markers
-- Closing braces
-- Attributions and bylines
-- Commented out code
-- HTML comments (HTML in source, not a comment on HTML)
-- Nonlocal information
-- Too much information
-- Inobvious connection
-- Function headers
+- <b><u>Mumbling</u></b>: if you decide to write a comment, spend the time necessary to make sure it is the best comment you can write.
+- <b><u>Redundant</u></b>: if the names are self explanitory, then you shouldn't need comments like this:
+
+```csharp
+// The lifecycle event support for this component.
+protected LifecycleSupport lifecycle = new LifecucleSupport(this);
+
+// The logger implementation
+protected Log logger = null;
+
+// Associated logger name.
+protected string logName = null;
+```
+
+... yeah, based off the name, we can see that. Are these necessary if the names are good enough?
+- <b><u>Misleading</u></b>: let's look at this example from the book:
+```csharp
+// Utility method that returns when this.closed is true. Throws an exception
+// if the timeout is reached.
+public async void waitForClose(long timeoutMillis) 
+{
+  if(!this.closed)
+  {
+    wait(timeoutMillis);
+    if(!this.closed)
+    {
+      throw new Exception("could not be closed");
+    }
+  }
+}
+```
+
+The method doesn't return WHEN ``this.closed`` becomes true, it returns IF ``this.closed`` is true, otherwise it waits for a blind timeout and then throws an exception if ``this.closed`` is still not true.
+
+Subtle difference, but misleading.
+- <b><u>Redundant</u></b>: wait, didn't we.. oh I get it.
+- <b><u>Mandated comments</u></b>: the teams I've worked for have always had mandated comments. To me they make it easier to read, but my eyes always just skip over all the comments. Most of them are like "the logger" or "the id", so I don't really feel like there's much to miss.
+- <b><u>Position markers</u></b>: stuff like regions and other marker comments, are they really needed with modern IDEs? Doubtful.
+- <b><u>Closing braces</u></b>: same thing, do we really need this with modern IDEs? Or, your function is too long. Either way, definitely not necessary.
+- <b><u>Attributions and bylines</u></b>: source control makes this irrelevant.
+- <b><u>Commented out code</u></b>: people who see commented out code won't know what it's for, or have the courage to delete it. They'll think there's a reason for the commented out code, and it'll live forever.
 
 ## Classes
 With classes, there were few lessons to learn, most mainly focused around the Single Responsibility Principle (big surprise).
