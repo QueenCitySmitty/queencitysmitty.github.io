@@ -1,6 +1,6 @@
 ---
 title: "On \"Clean Code\""
-date: 2020-12-04T08:56:02-08:00
+date: 2020-12-14T19:02:31-08:00
 categories:
   - Books
 tags:
