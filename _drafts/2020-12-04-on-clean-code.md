@@ -256,33 +256,22 @@ Sure, the code looks fine... but how does it <i>smell?????</i>
 Let's look over some smells:
 
 Comments
-- Inappropriate information
-- Obsolete comment
-- Redundant comment
-- Poorly written comment
-- Redundant comment
-- Commented out code
-
-Environment
-- Build requires more than 1 step
-- Tests require more than 1 step
+- <b><u>Inappropriate information</u></b>: if it isn't relevant, leave it out. Put it in a wiki or in a work item or somewhere where it IS relevant.
+- <b><u>Obsolete comment</u></b>: anything that's old, irrelevant, or incorrect is obsolete. 
+- <b><u>Redundant comment</u></b>: if something adequately describes itself, you don't need a comment.
+- <b><u>Poorly written comment</u></b>: if it's worth writing, it's worth writing correctly.
+- <b><u>Redundant comment</u></b>: if something adequately descr.. wait, didn't we already do this?
 
 Functions
-- Too many arguments
-- Argument outputs
-- Flag arguments
-- Dead functions
+- <b><u>Too many arguments</u></b>: if there's too many arguments, the function is probably doing too many things.
+- <b><u>Flag arguments</u></b>: same thing, if the the function takes a boolean flag, it more than likely doesn't follow SRP.
+- <b><u>Dead functions</u></b>: methods that aren't called should be cleaned out.
 
 General
-- Multiple languages in one source file
-- Obvious behavior is unimplemented
-- Incorrect behavior at boundaries
-- Overridden safeties
-- Duplication
-- Duplication
-- Code at wrong level of abstraction
-- Base classes depend on their derivatives
-- Too much information
+- <b><u>Obvious behavior is unimplemented</u></b>: following the "Principle of Least Surprise", any function or class should implement the behaviors that another programmer could reasonably expect.
+- <b><u>Duplication</u></b>: Dave Thomas and Andy Hunt called it the DRY principle (Don't Repeat Yourself). Ron Jeffries ranks this rule second, just below getting all tests to pass. Once, and only once.
+- <b><u>Duplication</u></b>: ... T__T 
+- <b><u>Code at wrong level of abstraction</u></b>: we want to make sure <i>all</i> lower level concepts to be in derivatives and <i>all</i> higher level concepts to be in base classes.
 
 ## Conclusion
 This, to me is definitely a book programmers will want to read. Does it have a lot of in depth, thought provoking chapters that will make you put the book down and think for an hour? Not really. Does it have concepts that everyone should follow? Most likely. For most of us, it's not just my code or your code, it's <i>our</i> code, and we're all responsible for how it looks, how it runs, and how easy we make it to maintain for people in the future. Next time someone makes a pull request, or you're about to create one, double check on code cleanliness to leave the campgrounds cleaner than you found it.
