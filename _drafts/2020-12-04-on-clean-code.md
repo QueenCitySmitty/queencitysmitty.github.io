@@ -9,24 +9,26 @@ tags:
 ---
 
 ## Introduction
-[<i>Clean Code</i> by Robert "Uncle Bob" Martin](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882) is one of those books I've heard about, but never got a chance to check it out. I would always see it in people's "Top Programming Books to Read" lists, along with other intimidating books like "Design Patterns: Elements of Reusable Object-Oriented Software" or "The C Programming Language". I remember trying to read those books in college, and it was... rough.
+[<i>Clean Code</i> by Robert "Uncle Bob" Martin](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882) is one of those books I've heard about, but never got a chance to sit down and read. I would always see it in people's "Top Programming Books to Read" lists, along with other intimidating books like "Design Patterns: Elements of Reusable Object-Oriented Software" or "The C Programming Language". I remember trying to read those books in college, and it was... rough, so the thought of going into another book that makes it on the same list was intimidating.
 
-After a couple years in the industry, I've seen some brilliantly elegant code and some... not so elegant code. I've struggled with naming variables and functions, and have also fell into traps of assuming functions or variables do or are what they're called or named, and it has been a lesson learned the hard way.
+After a couple years in the industry, I've seen some brilliantly elegant code and some... not so much. I've struggled with naming variables and functions, and have also fell into traps of assuming functions do what they're called, and it has been a lesson learned the hard way.
 
 A couple of months ago, I went on a technical book buying spree, and have yet to finish 1... might as well be another side project. This time, I had a friend recently move into the software engineer role and brought up in conversation that someone mentioned this book to him. Knowing I had the book, I thought it would be fun to read and discuss together. This book was such a great read, I thought I'd write up my thoughts.
 
 ## What is 'clean code'?
 The book starts off with chapter one going through scenarios that are all too familiar: 
-> "We've all felt the relief of seeing our messy program work and deciding that a working mess is better than nothing. We've all said we'd go back and clean it up later. Of course, in those days, we didn't know LeBlanc's law: <b><u>Later equals never</u></b>."
+> "We've all felt the relief of seeing our messy program work and deciding that a working mess is better than nothing. We've all said we'd go back and clean it up later. Of course, in those days, we didn't know LeBlanc's Law: <b><u>Later equals never</u></b>."
 
 We all know messy code when we see it. Variables poorly named, functions a mile long, classes all over the place... it's easy to spot. But what's next? How do we go from a mess to something that's readable and concise? 
 
-Martin goes into a scenario where a scrappy team has their MVP or PoC running well enough to gain traction. Once the feature requests and requirements start setting in, it can be hard to maintain the code and keep it orderly. The mess keeps piling up, slowing the team down and reducing productivity until it asymptotically approaches zero. Under the pressure to stay productive, management green lights a rewrite. The tiger team is formed, and they now have to replicate all of the functionality of the older application, while it's still building out new features. Now the teams are racing forward until the newer team can catch up to the older team's work.
-
-
+Clean code is when you know exactly what functions do and what variables are. Clean code is when classes are organized such that you might not even need to look up documentation, you can just find it naturally. Clean code is Separation of Concerns, it's high cohesion low coupling, it's no fluff, it's all substance, but above all, it's clarity.
 
 ## "Clarity is Key"
-If there's really one take-away from this book, it's that "clarity is key". There are chapters on meaningful names, functions, comments, and formatting all dedicated to making sure intent is clear. I feel like these chapters can be summarized from this one excerpt:
+Sometimes, in software, when we let these issues get out of hand, the cost to repair can almost be overwhelming. Martin goes into a scenario where a scrappy team has their MVP or PoC running well enough to gain traction. Once the feature requests and requirements start rolling in, it can be hard to maintain the code and keep it orderly, ESPECIALLY if we didn't start with clean code (which we rarely do). The mess keeps piling up, slowing the team down and reducing productivity until it asymptotically approaches zero. Under the pressure to stay productive, management green lights a rewrite. The tiger team is formed, and they now have to replicate all of the functionality of the older application, while it's still building out new features. Now the teams are racing forward until the newer team can catch up to the older team's work.
+
+How can we avoid this? How can we start with clean code, and maintain order throughout the entire process?
+
+If there's really one take-away from this book, it's that "clarity is key". There are chapters on meaningful names, functions, and comments that can be summarized from this one excerpt:
 
 > "The name of a variable, function, or class should answer all the big questions. It should tell you why it exists, what it does, and how it is used. If a name requires a comment, then the name does not reveal its intent."
 
@@ -49,13 +51,13 @@ Spacing is fine, there's no complex logic, indentation is easy to read.. so why 
 
 "Okay, so the function is returning a list of int arrays...? What's "theList"? X in theList? What is that? First element in X? Equivalent to 4?? What is 4!?"
 
-Martin says "the problem isn't the simplicity of the code but the <i>implicity</i> of the code." The code implicitly requires we know:
+Martin says "the problem isn't the simplicity of the code but the <i>implicity</i> of the code." It implicitly requires we know:
 1. What kinds of things are in ``theList``?
 2. What is the significance of the zeroth subscript of an item in ``theList``?
 3. What is the significance of the value 4?
 4. How would I use the list being returned?
 
-Let's rewrite this to be more clear. Let's say we're working on a mine sweeper game, and we find that ``theList`` is actually a gmaeboard. Each cell on the board is represented by an array, and the first element in the array is the status value of the cell, with 4 being 'flagged'.
+Let's rewrite this to be more clear. Let's say we're working on a mine sweeper game, and we find that ``theList`` is actually a gameboard. Each cell on the board is represented by an array, and the first element in the array is the status value of the cell, with 4 being 'flagged'.
 
 ```csharp
 public List<int[]> getFlaggedCells()
@@ -87,10 +89,10 @@ public List<Cell> getFlaggedCells() {
 This takes SIGNIFICANTLY less brainpower, and you can understand it in 1 read through. Easy. Amazing what clarity can do to the code.
 
 ## Functions
-Martin says that functions should be small.. really small.. "hardly ever longer than 20 lines", and that they should do "one thing, they should do it well, and they should do it only." Single Responsibility Principle, right? It's amazing how often I find this violated.
+Martin says that functions should be small.. really small.. "hardly ever longer than 20 lines", and that they should do "one thing, they should do it well, and they should do it only." Single Responsibility Principle, right? It's a common theme throughout this whole book: <i>don't do too much, do just enough</i>.
 
 ### Method Bodies
-I was recently making a change in one of our code bases for a label's value based on some conditions. Trying to walk through the controller intialization, I found the logic barried in the ``.then(...)`` of a Promise, and it was really hard to read. Trying to use the Boyscouts rule that was used in the book and "leave the campground cleaner than [I] found it"... I decided to break that out into another function that ONLY set the label. So instead of 
+I was recently making a change in one of our code bases for a label's value based on some conditions. Trying to walk through the controller initialization, I found the logic buried in the ``.then(...)`` of a Promise. Without knowing exactly where to look, it took me significantly longer to understand the flow than I'd like to admit. Trying to use the Boy Scouts rule that was used in the book and "leave the campground cleaner than [I] found it"... I decided to break that out into another function that ONLY set the label. So instead of 
 
 ```ts
 this.method().then( (result) =>
@@ -114,14 +116,15 @@ private setLabel(result: MethodResult) {
 }
 ```
 
-Simple. One responsibility, easy to read. It felt so much more organized, and the constructor was much easier to read. Was definitely one of those "hey I applied the thing I learned" moments.
+Simple. One responsibility, easy to read. It felt so much more organized, and the constructor was much easier to read. It was definitely one of those "hey I applied the thing I learned" moments.
 
-In the intro to the book, [Ward Cunningham](https://en.wikipedia.org/wiki/Ward_Cunningham) has the quote:
+But was my change really 'cleaner'? In the intro to the book, [Ward Cunningham](https://en.wikipedia.org/wiki/Ward_Cunningham) has the quote:
 > You know you are working on clean code when each routine turns out to be pretty much what you expected.
+
 The refactor of creating a function called ``setLabel`` where it.. sets the label, <i>and only sets the label</i>, felt like I was making what Ward would call clean code.
 
 ### Arguments
-This is another section where Martin's passion (or previous frustration) can be felt. He says that 1 is great, 2 is okay, and 3 "should be avoided where possible. More than 3 requires very special justification - <u><i>and then should be used anyway</i></u>".
+This is another section where Martin's passion (or previous frustration) can be felt. He says that 1 is great, 2 is okay, and 3 "should be avoided where possible. More than 3 requires very special justification - <u><i>and then shouldn't be used anyway</i></u>".
 
 His example for this is the difference between these two:
 
@@ -132,9 +135,14 @@ Circle makeCircle(Point center, double radius);
 
 > Reducing the number of arguments by creating objects out of them may seem like cheating, but it's not. When groups of variables are passed together, the way x and y are in the example above, they are likely part of a concept <b>that deserves a name of its own</b>.
 
+The ``x`` and ``y`` represent a point of a circle, so we can make an object ``Point``, but even better, this gives us an opportunity to relabel the argument. We can call it ``center``, now clarifying exactly the purpose of that point.
+
 The other 2 great pieces of advice from Martin that I think are worth bringing up:
-1. Don't use booleans as inputs. "It immediately complicates the signature of the method, loudly proclaiming that this function does more than one thing. It does one thing when the flag is true and another if the flag is false!"
-2. Command Query separation - "Either your function should change the state of an object, or it should return some information about that object."
+1. Don't use booleans as inputs. 
+>"It immediately complicates the signature of the method, loudly proclaiming that this function does more than one thing. It does one thing when the flag is true and another if the flag is false!"
+
+2. Command Query separation
+>"Either your function should change the state of an object, or it should return some information about that object."
 
 ## Comments
 Comments, according to Martin, are
@@ -176,36 +184,38 @@ In this section, Martin places comments into one of two buckets, Good Comments a
 - Function headers
 
 ## Classes
-With classes, there were few lessons to learn, most mainly focused around the Single Responsibility Principle.
+With classes, there were few lessons to learn, most mainly focused around the Single Responsibility Principle (big surprise).
 > "With functions we count lines. With classes, we count responsibilities."
 
 SRP is pervasive throughout the book. The best analogy I've seen for this came from Martin himself:
 >"Do you want your tools organized into toolboxes with many small drawers each containing well-defined and well-labeled components? Or do you want a few drawers that you just toss everything into?"
 
-Martin also talks about cohesion and coupling (which, [here's a good StackOverflow](https://stackoverflow.com/questions/14000762/what-does-low-in-coupling-and-high-in-cohesion-mean) about what it means to have high cohesion and low coupling). Cohesion is described as "the more variables a method manipulates, the more cohesive that method is to its class".  So according to Martin, "a class in which each variable is used by each method is maximally cohesive." When I was reading this section, I thought that was a super interesting point: to be maximally cohesive each function uses each variable. Finally, on coupling, Martin says:
+Martin also talks about cohesion and coupling (which, [here's a good StackOverflow](https://stackoverflow.com/questions/14000762/what-does-low-in-coupling-and-high-in-cohesion-mean) about what it means to have high cohesion and low coupling). Cohesion is described as "the more variables a method manipulates, the more cohesive that method is to its class".  So according to Martin, "a class in which each variable is used by each method is maximally cohesive." When I was reading this section, I thought that was a super interesting point: to be maximally cohesive, each function uses each variable. 
+
+Finally, on coupling, Martin says:
 >"Lack of coupling means that the elements of our system are better isolated from each other and from change."
 
 Low coupling and keeping elements isolated from change will help reduce the chance of regressions.
 
 ## Unit Tests
 Code needs to be clean, but Martin makes great points about why unit tests should also be clean.
->"The problem is that tests must change as the production code evolves. The dirtier the tests, the harder they are to change. The more tangled the test code, the more likely it is that you will spend more time cramming new tests into the suit than it takes to write the new production code."
+>"The problem is that tests must change as the production code evolves. The dirtier the tests, the harder they are to change. The more tangled the test code, the more likely it is that you will spend more time cramming new tests into the suite than it takes to write the new production code."
 
 Refactoring code is one struggle, but when you have to also refactor the unit tests surrounding the code, the difficulty of a change might be a multiplier if both aren't kept clean. In this section, he has one of my favorite quotes in the book:
->"What makes a clean test? 3 things: readability, readability, and readability"
+>"What makes a clean test? 3 things: readability, readability, and readability."
 
-Just like everything else we've talked about so far, if it's hard to read, it's hard to understand. If it's hard to understand, it's going to take much longer to complete the task than if someone had taken the time to write clear, concise tests that anyone can immediately understand. Velocity depends on understanding what's written. Martin also mentions that clean tests follow FIRST:
-- Fast - when a test runs slow, you won't want to run tests frequently.
-- Independent - tests should not depend on each other. If one fails, then it kicks off a cascading chain of failures and the root cause is hard to diagnose.
-- Repeatable - tests should be able to run in any environment: prod, QA, local, even without a network. If your tests aren't repeatable, you'll have an excuse for why they fail (see: flaky tests).
-- Self-validating - tests should have a boolean output; either they pass or they fail. If the tests aren't self-validating, then failure can become subjective and running the tests can require a long manual evaluation.
-- Timely - written in a timely fashion. If you write tests after the production code, you may find the production code hard to test.
+Just like everything else we've talked about so far, if it's hard to read, it's hard to understand. If it's hard to understand, it's going to take much longer to complete the task than if someone had taken the time to write clear, concise tests that anyone can immediately understand. Velocity depends on understanding what's written. Martin mentions that clean tests follow FIRST:
+- <u>Fast</u> - when a test runs slow, you won't want to run tests frequently.
+- <u>Independent</u> - tests should not depend on each other. If one fails, then it kicks off a cascading chain of failures and the root cause is hard to diagnose.
+- <u>Repeatable</u> - tests should be able to run in any environment: prod, QA, local, even without a network. If your tests aren't repeatable, you'll have an excuse for why they fail (see: flaky tests).
+- <u>Self-validating</u> - tests should have a boolean output; either they pass or they fail. If the tests aren't self-validating, then failure can become subjective and running the tests can require a long manual evaluation.
+- <u>Timely</u> - written in a timely fashion. If you write tests after the production code, you may find the production code hard to test.
 
 Closing off this chapter, Martin talks about how test rot == code rot:
 > "If you let tests rot, your code will rot too. Keep your tests clean."
 
 ## Smells
-This final section is dedicated to "code smells". This is another industry term I've recently heard, and I'm definitely going to be using it from here on out.
+This final section is dedicated to "code smells". This is another industry term I've recently learned, and I'm definitely going to be using it from now on.
 
 Code smell, for those who don't know, was popularized by Martin Fowler in <i>Refactoring: Improving the Design of Existing Code</i>, saying "it is a surface indication that usually corresponds to a deeper problem in the software system".
 
