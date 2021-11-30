@@ -68,7 +68,7 @@ public List<int[]> getFlaggedCells()
     if (cell[STATUS_VALUE] == FLAGGED)
       flaggedCells.Add(cell);
   }
-  return flaggedCels;
+  return flaggedCells;
 }
 ```
 
@@ -149,7 +149,7 @@ Comments, according to Martin, are
 > "[...] at best, a necessary evil. If our programming languages were expressive enough, or we had the talent to subtly wield those languages to express our intent, we would not need comments very much - perhaps at all."
 
 My reaction when I read this was basically...
-![Can't reall argue with that](/assets/images/nothing-to-say.jpg)
+![Can't really argue with that](/assets/images/nothing-to-say.jpg)
 
 I've been sort of wrestling with this for a while. One of the Principle engineers on my team, when I started, casually said "code is the only source of truth. Comments lie, code doesn't" and it's really stuck with me for a while. If I have to write comments to explain my code, I might need to rewrite my code.
 
@@ -162,7 +162,7 @@ In this section, Martin places comments into one of two buckets, Good Comments a
 ```
 // format matched kk::mm::ss EEE, MMM dd, YYYY
 ```
-- <b><u>Explination of intent</u></b>: a comment providing intent can be helpful. Code can't always provide business justification, but a comment might be helpful.
+- <b><u>Explication of intent</u></b>: a comment providing intent can be helpful. Code can't always provide business justification, but a comment might be helpful.
 - <b><u>Clarification</u></b>: if you're using a library, parts of the library might be confusing, which gives us a good opportunity for clarification comments.
 - <b><u>Warning of consequences</u></b>: we've all seen these memes:
 
@@ -174,11 +174,11 @@ Don't be a hero, heed the warning.
 
 ### Bad Comments
 - <b><u>Mumbling</u></b>: if you decide to write a comment, spend the time necessary to make sure it is the best comment you can write.
-- <b><u>Redundant</u></b>: if the names are self explanitory, then you shouldn't need comments like this:
+- <b><u>Redundant</u></b>: if the names are self explanatory, then you shouldn't need comments like this:
 
 ```csharp
 // The lifecycle event support for this component.
-protected LifecycleSupport lifecycle = new LifecucleSupport(this);
+protected LifecycleSupport lifecycle = new LifecycleSupport(this);
 
 // The logger implementation
 protected Log logger = null;
